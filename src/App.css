@@ -60,3 +60,13 @@ background: linear-gradient(36deg, rgba(2,0,36,1) 0%, rgba(27,9,121,1) 23%, rgba
   align-items: center;
   background-color: rgba(0, 0, 0, 0.8);
 }
+.end{
+  background-color: aqua;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.screen{
+height: 100vh;
+
+}

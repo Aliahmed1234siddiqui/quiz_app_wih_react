@@ -24,6 +24,7 @@ fbAuth().then((res:any) =>{
     console.log(err)
 })
 }
+
 useEffect(()=>{checkAuth()},[])
   return loader ?   (
     <div className='ma d-flex justify-content-center'>

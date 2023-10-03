@@ -7,16 +7,16 @@ import { getAnalytics } from "firebase/analytics";
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-  apiKey: "AIzaSyD818nZShyHYcnCxpoWFW20vtfK2Y5md5A",
-  authDomain: "quizapp-react-7bfc8.firebaseapp.com",
-  databaseURL: "https://quizapp-react-7bfc8-default-rtdb.firebaseio.com",
-  projectId: "quizapp-react-7bfc8",
-  storageBucket: "quizapp-react-7bfc8.appspot.com",
-  messagingSenderId: "23088185997",
-  appId: "1:23088185997:web:c9e2c67f390af836a0d8c4",
-  measurementId: "G-D47RWC8VH1"
+  apiKey: "AIzaSyBHO8Huurc8fQInME_y4gnfeeohkVFTLgc",
+  authDomain: "quiz-react-3d68b.firebaseapp.com",
+  databaseURL: "https://quiz-react-3d68b-default-rtdb.firebaseio.com",
+  projectId: "quiz-react-3d68b",
+  storageBucket: "quiz-react-3d68b.appspot.com",
+  messagingSenderId: "711753674265",
+  appId: "1:711753674265:web:43b7a6315250ad10778488",
+  measurementId: "G-R0RQYR1QVC"
 };
 
 // Initialize Firebase
 export const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app)
+const analytics = getAnalytics(app);

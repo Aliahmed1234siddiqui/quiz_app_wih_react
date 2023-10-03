@@ -1,5 +1,6 @@
 import {
     getAuth,
+    signOut,
     createUserWithEmailAndPassword,
     signInWithEmailAndPassword,
     onAuthStateChanged,
@@ -115,11 +116,21 @@ import {
       const reference = ref(db, `${nodeName}/${id ? id : ""}`);
       onValue(reference, (data)=>{
         if(data.exists()){
-let a = Object.values(data.val());
-          resolve(a)
+let a =Object.values(data.val())
+          resolve(a[0])
         }else{
           reject("No Data found :(");
         }
       })
     });
+  }
+export  let fbLogout = ()=>{ 
+  return new Promise((resolve , reject)=>{
+    signOut(auth).then(() => {
+      resolve(" Sign-out successful.")
+    }).catch((error) => {
+      reject("An error happened.") 
+    });
+  })
+
   }

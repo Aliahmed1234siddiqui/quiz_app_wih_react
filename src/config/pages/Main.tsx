@@ -1,66 +1,112 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react';
 import { fbGet } from '../Router/firebaseMethod';
 import { Quiz } from '@mui/icons-material';
+import '../../App.css';
+import ArrowCircleLeftIcon from '@mui/icons-material/ArrowCircleLeft';
 
 export default function Main() {
-    const [ques , SetQues] = useState<any>([]);
-    const [quiz , SetQuiz] = useState<any>([]);
-    
-    const [currentQ , SetCurrentQ] = useState<number>(0) 
-    const [score , SetScore] = useState<any>(0) 
+  const [key, setKey] = useState<boolean>(false);
+  const [data, setData] = useState<any>();
+  const [currentQ, setCurrentQ] = useState(0);
+  const [score, setScore] = useState(0);
 
-    let getQues = ()=>{
-        fbGet("quiz").then(res=>{
-SetQuiz(res)
-        }).catch(err=>{
-            console.log(err);
-        })
-    fbGet("question").then((res)=>{
-        SetQues(res);
-    }).catch(err=>{
-        console.log(err);
-    })
+  useEffect(() => {}, []);
+
+  let getData = () => {
+    setKey(true);
+    fbGet('quiz')
+      .then((res) => {
+        setData(res);
+        console.log(res);
+      })
+      .catch((err) => {
+        alert(err.message);
+      });
+
+  };
+
+  let next = (selectedAnswer: any) => {
+    changeQ();
+    if (selectedAnswer === data.allQuestion[currentQ].correctQues) {
+      setScore(score + 1);
     }
-    let next= (selected:any)=>{
-questionChange();
-if(selected === ques[currentQ].correctQues){
-    SetScore(score + 1)
-    console.log(score)
-}
+  };
+
+  let changeQ = () => {
+    if (currentQ === data.allQuestion.length - 1) {
+      alert('Your score is ' + score);
+      setKey(false);
+    } else {
+      setCurrentQ(currentQ + 1);
     }
-    let questionChange = ()=>{
-if(currentQ < ques.length-1){
-SetCurrentQ(currentQ+1)
-}else{
-    alert("your score is" + score)
+  };
+
+  return key ? (
+    <>
+      <div className="app">
+        <div className="main1 p-5">
+          <h1 className='bg-black text-white py-2 text-center'>{data.quizName} QUIZ</h1>
+          <h1>
+            Q {currentQ + 1} / {data.allQuestion.length}
+          </h1>
+          <p>{data.allQuestion[currentQ].question}</p>
+          <div className="row d-flex justify-content-center">
+            <div
+              onClick={() => {
+                next(data.allQuestion[currentQ].option);
+              }}
+              className="btn btn-primary col-md-5 col-sm-12 m-2"
+            >
+              {data.allQuestion[currentQ].option}
+            </div>
+            <div
+              onClick={() => {
+                next(data.allQuestion[currentQ].option2);
+              }}
+              className="btn btn-primary col-md-5 col-sm-12 m-2"
+            >
+              {data.allQuestion[currentQ].option2}
+            </div>
+            <div
+              onClick={() => {
+                next(data.allQuestion[currentQ].option3);
+              }}
+              className="btn btn-primary col-md-5 col-sm-12 m-2"
+            >
+              {data.allQuestion[currentQ].option3}
+            </div>
+            <div
+              onClick={() => {
+                next(data.allQuestion[currentQ].option4);
+              }}
+              className="btn btn-primary col-md-5 col-sm-12 m-2"
+            >
+              {data.allQuestion[currentQ].option4}
+            </div>
+          </div> 
+        </div>
+      </div> 
+    </>
+  ) : (
+    <>
+      <div className="screen row w-100">
+        <div className="col-md-3 bg-dark  p-5">
+          <button className="btn btn-danger" onClick={getData}>
+            Computer Quiz
+          </button>
+        </div>
+        <div className="end col-md-9 p-5">
+          <div className="div">
+            <h1 className="fw-bold text-center">
+              WELCOME TO QUIZ ! <br />{' '}
+              <span className="fs-5 fw-bold">
+                Choose your subject and start the quiz
+              </span>
+            </h1>
+            <ArrowCircleLeftIcon className="w-100" />
+          </div>
+        </div>
+      </div>
+    </>
+  );
 }
-    }
-
-    useEffect(()=>{getQues()} , [])
-return  (
-<>
- <div className="app">
-    <div className="main1 text-center p-5">
-        <h1 className='bg-dark text-white text-center py-2'>{quiz.quizName} QUIZ</h1>
-<h2>Q {currentQ+1}/{ques.length}</h2>
-<p>{ques[currentQ].question}</p>
-<div className="row d-flex justify-content-center m-3 ">
-    <div onClick={()=>{next(ques[currentQ].option)}} className="btn btn-primary col-md-5 col-sm-10 m-2 ">{ques[currentQ].option}</div>
-    <div onClick={()=>{next(ques[currentQ].option2)}}  className="btn btn-primary col-md-5 col-sm-10 m-2">{ques[currentQ].option2}</div>
-    <div onClick={()=>{next(ques[currentQ].option3)}}  className="btn btn-primary col-md-5 col-sm-10 m-2">{ques[currentQ].option3}</div>
-    <div onClick={()=>{next(ques[currentQ].option4)}}  className=" btn btn-primary col-md-5 col-sm-10 m-2">{ques[currentQ].option4}</div>
-
-</div> 
-    </div>
-
-</div>
-
-</>
-
-
-
-    );
-}
-
-
-
